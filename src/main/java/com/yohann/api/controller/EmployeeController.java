@@ -21,6 +21,7 @@ public class EmployeeController {
 
     /**
      * Read - Get all employees
+     *
      * @return - An Iterable object of Employee fullfilled
      */
     @GetMapping("/employees")
@@ -30,6 +31,7 @@ public class EmployeeController {
 
     /**
      * Read - Get one employee
+     *
      * @param id The id of the employee
      * @return An Employee object fullfilled
      */
@@ -41,55 +43,64 @@ public class EmployeeController {
 
     /**
      * Create - Add a new employee
+     *
      * @param employee An object employee
      * @return The employee object saved
      */
-//    @PostMapping("/employee")
-//    public Employee createEmployee(@RequestBody Employee employee) {
-//        return employeeService.saveEmployee(employee);
-//    }
-
     @PostMapping("/employee")
     public ResponseEntity<String> createEmployee(@Valid @RequestBody Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             bindingResult.getFieldErrors().forEach(error -> {
-                errors.append(error.getDefaultMessage()).append(". ");
+                errors.append(error.getDefaultMessage()).append("\n");
             });
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.toString());
         }
         employeeService.saveEmployee(employee);
-        return ResponseEntity.ok("Employee created successfully");
+
+        if (employee != null) {
+            return ResponseEntity.ok("Employee created successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while saving the employee");
+        }
     }
+
+//    @PostMapping("/employee")
+//    public Employee createEmployee(@RequestBody Employee employee) {
+//        return employeeService.saveEmployee(employee);
+//    }
 
 
     /**
      * Update - Update an existing employee
-     * @param id - The id of the employee to update
+     *
+     * @param id       - The id of the employee to update
      * @param employee - The employee object updated
      * @return
      */
     @PutMapping("/employee/{id}")
     public Employee updateEmployee(@PathVariable("id") final Long id, @RequestBody Employee employee) {
         Optional<Employee> e = employeeService.getEmployee(id);
-        if(e.isPresent()) {
+        if (e.isPresent()) {
             Employee currentEmployee = e.get();
 
             String firstName = employee.getFirstName();
-            if(firstName != null) {
+            if (firstName != null) {
                 currentEmployee.setFirstName(firstName);
             }
             String lastName = employee.getLastName();
-            if(lastName != null) {
-                currentEmployee.setLastName(lastName);;
+            if (lastName != null) {
+                currentEmployee.setLastName(lastName);
+                ;
             }
             String mail = employee.getMail();
-            if(mail != null) {
+            if (mail != null) {
                 currentEmployee.setMail(mail);
             }
             String password = employee.getPassword();
-            if(password != null) {
-                currentEmployee.setPassword(password);;
+            if (password != null) {
+                currentEmployee.setPassword(password);
+                ;
             }
             employeeService.saveEmployee(currentEmployee);
             return currentEmployee;
@@ -101,6 +112,7 @@ public class EmployeeController {
 
     /**
      * Delete - Delete an employee
+     *
      * @param id - The id of the employee to delete
      */
     @DeleteMapping("/deleteEmployee/{id}")
