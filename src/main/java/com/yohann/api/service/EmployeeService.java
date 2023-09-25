@@ -32,4 +32,10 @@ public class EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
         return savedEmployee;
     }
+
+//    public Employee saveEmployee(UserRequest userRequest){
+//        UserRequest employee = UserRequest.build(0L, userRequest.getFirstName(), userRequest.getLastName(),
+//                userRequest.getMail(), userRequest.getPassword());
+//        return employeeRepository.save(userRequest);
+//    }
 }

@@ -1,6 +1,10 @@
 package com.yohann.api.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.yohann.api.model.Employee;
@@ -40,10 +44,24 @@ public class EmployeeController {
      * @param employee An object employee
      * @return The employee object saved
      */
+//    @PostMapping("/employee")
+//    public Employee createEmployee(@RequestBody Employee employee) {
+//        return employeeService.saveEmployee(employee);
+//    }
+
     @PostMapping("/employee")
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public ResponseEntity<String> createEmployee(@Valid @RequestBody Employee employee, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errors.append(error.getDefaultMessage()).append(". ");
+            });
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.toString());
+        }
+        employeeService.saveEmployee(employee);
+        return ResponseEntity.ok("Employee created successfully");
     }
+
 
     /**
      * Update - Update an existing employee
