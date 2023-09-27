@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -33,7 +32,7 @@ public class Employee {
     private String mail;
 
     @NotEmpty(message = "Password may not be empty")
-    @Size(min = 6, message = "Password must be minimum 6 characters long")
+    @Size(min = 3, message = "Password must be minimum 3 characters long")
     private String password;
 
 }

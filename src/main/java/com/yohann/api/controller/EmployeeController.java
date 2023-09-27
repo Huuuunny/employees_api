@@ -52,7 +52,7 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             bindingResult.getFieldErrors().forEach(error -> {
-                errors.append(error.getDefaultMessage()).append("\n");
+                errors.append(error.getDefaultMessage()).append(",");
             });
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.toString());
         }
@@ -78,9 +78,10 @@ public class EmployeeController {
      * @param employee - The employee object updated
      * @return
      */
-    @PutMapping("/employee/{id}")
+    @PutMapping("/employee/{id}/edit")
     public Employee updateEmployee(@PathVariable("id") final Long id, @RequestBody Employee employee) {
         Optional<Employee> e = employeeService.getEmployee(id);
+
         if (e.isPresent()) {
             Employee currentEmployee = e.get();
 
@@ -91,7 +92,6 @@ public class EmployeeController {
             String lastName = employee.getLastName();
             if (lastName != null) {
                 currentEmployee.setLastName(lastName);
-                ;
             }
             String mail = employee.getMail();
             if (mail != null) {
@@ -100,7 +100,6 @@ public class EmployeeController {
             String password = employee.getPassword();
             if (password != null) {
                 currentEmployee.setPassword(password);
-                ;
             }
             employeeService.saveEmployee(currentEmployee);
             return currentEmployee;

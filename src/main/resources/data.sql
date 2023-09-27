@@ -12,3 +12,5 @@
 --     ('Laurent', 'GINA', 'laurentgina@mail.com', 'laurent'),
 --     ('Sophie', 'FONCEK', 'sophiefoncek@mail.com', 'sophie'),
 --     ('Agathe', 'FEELING', 'agathefeeling@mail.com', 'agathe');
+
+-- SELECT * FROM EMPLOYEES
