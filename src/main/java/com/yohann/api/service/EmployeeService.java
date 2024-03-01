@@ -28,14 +28,8 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public Employee saveEmployee(Employee employee){
-        Employee savedEmployee = employeeRepository.save(employee);
-        return savedEmployee;
+    public void saveEmployee(Employee employee){
+        employeeRepository.save(employee);
     }
 
-//    public Employee saveEmployee(UserRequest userRequest){
-//        UserRequest employee = UserRequest.build(0L, userRequest.getFirstName(), userRequest.getLastName(),
-//                userRequest.getMail(), userRequest.getPassword());
-//        return employeeRepository.save(userRequest);
-//    }
 }

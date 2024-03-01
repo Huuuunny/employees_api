@@ -35,7 +35,7 @@ public class EmployeeController {
      * @param id The id of the employee
      * @return An Employee object fullfilled
      */
-    @GetMapping("/employee/{id}")
+    @GetMapping("/employees/{id}")
     public Employee getEmployee(@PathVariable("id") final Long id) {
         Optional<Employee> employee = employeeService.getEmployee(id);
         return employee.isPresent() ? employee.get() : null;
@@ -47,7 +47,7 @@ public class EmployeeController {
      * @param employee An object employee
      * @return The employee object saved
      */
-    @PostMapping("/employee")
+    @PostMapping("/employees")
     public ResponseEntity<String> createEmployee(@Valid @RequestBody Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errors = new StringBuilder();
@@ -78,7 +78,7 @@ public class EmployeeController {
      * @param employee - The employee object updated
      * @return
      */
-    @PutMapping("/employee/{id}/edit")
+    @PutMapping("/employees/{id}/edit")
     public Employee updateEmployee(@PathVariable("id") final Long id, @RequestBody Employee employee) {
         Optional<Employee> e = employeeService.getEmployee(id);
 
@@ -114,7 +114,7 @@ public class EmployeeController {
      *
      * @param id - The id of the employee to delete
      */
-    @DeleteMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/employees/{id}")
     public void deleteEmployee(@PathVariable("id") final Long id) {
         employeeService.deleteEmployee(id);
     }
